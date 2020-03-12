@@ -1,1 +1,1 @@
-web: AMS.wsgi --log-file -
+web: gunicorn AMS.wsgi
