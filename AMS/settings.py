@@ -25,7 +25,7 @@ SECRET_KEY = '&^5#)fefhnscqivy#tfa!rb49w*k0_1laxl^s6^@f@*&1$)ny$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ams-3rd-year-project.herokuapp.com']
 
 
 # Application definition
@@ -126,15 +126,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
+
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'), # define a location for static files such as imgs and css to be stored/reference from
 )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/' # define q location for uploaded files to be strored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -152,3 +156,8 @@ EMAIL_HOST_USER = 'amsbaseemail123@gmail.com'
 EMAIL_HOST_PASSWORD = 'AMSemail'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'amsbaseemail123@gmail.com'
+
+
+import dj_database_url 
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
